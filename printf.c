@@ -1,7 +1,5 @@
 #include "main.h"
 
-void print_buffer(char buffer[], int *buff_ind);
-
 /**
  * _printf - Printf function
  * @format: format.
@@ -9,9 +7,57 @@ void print_buffer(char buffer[], int *buff_ind);
  */
 int _printf(const char *format, ...)
 {
-	int i, printed = 0, printed_chars = 0;
-	int flags, width, precision, size, buff_ind = 0;
-	va_list list;
-	char buffer[BUFF_SIZE];
+	int i, chars_print = 0;
+	char c, *str;
+	va_list list_arg;
+	
+	if(format == NULL)
+		return(-1);
 
-)
+	va_start(list_arg, format);
+
+	while(*format)
+	{
+		if(*format != '%')
+		{
+			write(1, format, 1);
+			chars_print++;
+		}
+
+		else
+		{
+			format++;
+			if (*format = '\0')
+				break;
+
+			if (*format == '%')
+			{
+				write(1, format, 1);
+				chars_print++;
+			}
+
+			if (*format == 'c')
+			{
+				c = va_arg(list_arg, int);
+				write(1, %c, 1);
+				chars_print++;
+			}
+
+			if (*format == 's')
+			{
+				*str = va_arg(list_arg, char*);
+				for (i = 0; str[i] != '\0'; ++i);
+
+				write(1, str, strlen);
+				chars_print += strlen;
+			}
+		}
+
+		format++;
+
+	}
+
+	va_end(list_args);
+
+	return(chars_print);
+}
